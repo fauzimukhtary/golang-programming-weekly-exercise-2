@@ -1,0 +1,26 @@
+procedure hitungJamBelajar(in n, k : integer, in/out wBelajar : integer)
+{I.S. n jumlah hari, k waktu yg bisa digunakan
+F.S. wBelajar rata-rata waktu belajar }
+kamus
+    i, wktMain : integer 
+algoritma
+    for i <- 1 to n do
+        input(wktMain)
+        wBelajar <- wBelajar + k - wktMain
+    endfor
+endprocedure
+
+program waktuBelajar
+kamus
+    n, k, wBelajar : integer
+algoritma
+    output("Input hari yang ingin dihitung:")
+	input(n)
+	output("Input jam yang dapat digunakan:")
+	input(k)
+	output("Input waktu main:")
+
+	wBelajar <- 0
+	hitungJamBelajar(n, k, wBelajar)
+	output(wBelajar / n)
+endprogram

@@ -1,0 +1,29 @@
+procedure tentukanKategori(umur : integer, beratSaatIni : real)
+{I.S. umur & berat badan bayi
+F.S. nilai berat badan ideal & kriteria}
+kamus
+    ideal : real
+    kategori : string
+algoritma
+    ideal <- 2.20462 * (umur * 2 + 8)
+
+    if beratSaatIni < 0.9 * ideal then
+        kategori <- "kurang"
+    else if beratSaatIni <= 1.1 * ideal then
+        kategori <- "ideal"
+    else
+        kategori <- "obesitas
+    endif
+
+    output(ideal, "lb")
+    output("Kategori:", kategori)
+endprocedure
+
+program BeratBadan
+kamus
+    umur : integer
+    berat : real
+algoritma
+    input(umur, berat)
+    tentukanKategori(umur, berat)
+endprogram
