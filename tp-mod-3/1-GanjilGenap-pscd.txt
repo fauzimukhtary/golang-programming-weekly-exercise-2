@@ -58,7 +58,7 @@ endprocedure
 procedure prosesPola(in angka : integer)
 {I.S. terdefinisi angka
 F.S. memproses angka termasuk membalik digit,
-menggabungkan, dan mengecek prima/tidaknya angka}
+menggabungkan, dan mengecek ganjil/genapnya angka}
 kamus
     {tidak ada}
 algoritma
