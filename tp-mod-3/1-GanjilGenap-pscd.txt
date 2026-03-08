@@ -1,0 +1,77 @@
+function reverseAngka(angka : integer) -> integer
+{I.S. terdefinisi angka
+F.S. mengembalikan nilai dari angka dengan urutan terbalik}
+kamus
+    hasilReverse : integer
+algoritma
+    hasilReverse <- 0
+    while angka != 0 do
+        hasilReverse <- (hasilReverse * 10) + (angka mod 10)
+        angka <- angka div 10
+    endwhile
+    return hasilReverse
+endfunction
+
+function ambilGabungkanTigaDigit(x : integer) -> integer
+{I.S. terdefinisi x
+F.S. mengembalikan nilai berupa hasil dari pembalikan 3 digit
+terakhir dan menggabungkannya dengan sisa digit awal}
+kamus
+    temp, hasil : integer
+algoritma
+    temp <- 0
+    while temp <= 99 do
+        temp <- (temp * 10) + (x mod 10)
+        x <- x div 10
+    endwhile
+    hasil <- x * 1000 + temp
+    return hasil
+endfunction
+
+procedure cekGanjilGenap(in angka : integer)
+{I.S. terdefinisi angka
+F.S. menampilkan "VALID" jika digit ganjil > digit genap,
+"INVALID" sebaliknya}
+kamus
+    temp, genap, ganjil : integer
+algoritma
+    temp <- angka
+    genap <- 0
+    ganjil <- 0
+
+    while temp != 0 do
+        if (temp mod 10) mod 2 == 0 then
+            genap <- genap + 1
+        else
+            ganjil <- ganjil + 1
+        endif
+        temp <- temp div 10
+    endwhile
+
+    if ganjil > genap then
+        output("Valid")
+    else
+        output("Invalid")
+    endif
+endprocedure
+
+procedure prosesPola(in angka : integer)
+{I.S. terdefinisi angka
+F.S. memproses angka termasuk membalik digit,
+menggabungkan, dan mengecek prima/tidaknya angka}
+kamus
+    {tidak ada}
+algoritma
+    angka <- reverseAngka(angka)
+    angka <- ambilGabungkanTigaDigit(angka)
+    output(angka)
+    cekGanjilGenap(angka)
+endprocedure
+
+program GanjilGenap
+kamus
+    n : integer
+algoritma
+    input(n)
+    prosesPola(n)
+endprogram

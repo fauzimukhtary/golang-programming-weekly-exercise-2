@@ -1,0 +1,89 @@
+function isPrima(angka : integer) -> boolean
+{I.S. terdefinisi angka
+F.S. mengembalikan true jika angka adalah prima,
+false jika sebaliknya}
+kamus
+    i : integer
+    prime : boolean
+algoritma
+    prime <- true
+    if angka < 2 then
+        prime <- false
+    else
+        i <- 2
+        while i * i <= angka do
+            if angka mod i == 0 then
+                prime <- false
+            endif
+            i <- i + 1
+        endwhile
+    endif
+    return prime
+endfunction
+
+function sumAllDigit(angka : integer) -> integer
+{I.S. terdefinisi angka
+F.S. mengembalikan jumlah semua digit pada angka}
+kamus
+    hasil : integer
+algoritma
+    hasil <- 0
+    while angka != 0 do
+        hasil <- hasil + (angka mod 10)
+        angka <- angka div 10
+    endwhile
+    return hasil
+endfunction
+
+function sumUntilBeforeLimit(b1, b2, limit : integer) -> integer
+{I.S. terdefinisi b1, b2, dan limit
+F.S. mengembalikan nilai berupa penjumlahan dari b1 dengan b2
+berulang kali hingga mendekati limit}
+kamus
+    hasil : integer
+algoritma
+    hasil <- b1
+    while hasil < limit do
+        hasil <- hasil + b2
+    endwhile
+    hasil <- hasil - b2
+    return hasil
+endfunction
+
+procedure eksperimen(in angka : integer)
+{I.S. terdefinisi angka
+F.S. mencetak angka, bilangan baru, dan prima/tidaknya bilangan baru}
+kamus
+    penambah, temp, hasil : integer
+    prima : boolean
+algoritma
+    temp <- angka
+    if angka < 100 then
+        if angka mod 10 == 0 then
+            penambah <- angka div 10
+        else
+            penambah <- angka mod 10
+        endif
+        hasil <- sumUntilBeforeLimit(temp, penambah, 1000)
+    else if angka < 1000 then
+        penambah <- sumAllDigit(angka)
+        hasil <- sumUntilBeforeLimit(temp, penambah, 10000)
+    else
+        hasil <- angka
+    endif
+    output(angka, " --> ", hasil)
+    prima <- isPrima(temp)
+    if prima then
+        output("Prima")
+    else
+        output("Bukan Prima")
+    endif
+endprocedure
+
+program BilanganPrima
+kamus
+    n : integer
+algoritma
+    input(n)
+    eksperimen(n)
+endprogram
