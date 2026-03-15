@@ -1,0 +1,187 @@
+program Aksi
+kamus (global)
+
+    constant NMAX : integer = 999
+
+    type character <
+        name : string
+        hp, nAttacks : integer
+        attacks : array [1..NMAX] of integer
+        totalAttacks : integer
+        >
+
+kamus (lokal)
+
+    link, ganon : integer
+
+algoritma
+
+    input(link, ganon)
+    gaming(link, ganon)
+
+endprogram
+
+procedure attack(in damage : integer, in/out attack, hp, nAttack : integer)
+
+{
+    I.S besar serangan (damage) terdefinisi, jumlah serangan (attack), nyawa lawan (hp),
+        dan banyak serangan (nAttack) terdefinisi sembarang.
+    F.S jumlah serangan (attack) bertambah sebanyak besar serangan (damage),
+        nyawa lawan (hp) berkurang sebanyak besar serangan (damage),
+        banyak serangan (nAttack) bertambah 1.
+}
+
+kamus
+
+    {tidak ada}
+
+algoritma
+
+    hp <- hp - damage
+    attack <- attack + damage
+    nAttack <- nAttack + 1
+
+endprocedure
+
+procedure defense(in damage : integer, in/out hp : integer)
+
+{
+    I.S. besar serangan (damage) terdefinisi, nyawa player (hp) terdefinisi sembarang.
+    F.S. nyawa player (hp) bertambah sebanyak besar serangan (damage),
+}
+
+kamus
+
+    {tidak ada}
+
+algoritma
+
+    hp <- hp + damage
+
+endprocedure
+
+procedure parry(in damage : integer, in/out selectorhp, victimhp : integer)
+
+{
+    I.S besar serangan (damage) terdefinisi,
+        nyawa player (selectorhp) dan nyawa lawan (victimhp) terdefinisi sembarang
+    F.S nyawa player (selectorhp) bertambah sebanyak besar serangan (damage),
+        nyawa lawan (victimhp) berkurang sebanyak besar serangan (damage).
+}
+
+kamus
+
+    {tidak ada}
+    
+algoritma
+
+    victimhp <- victimhp - damage
+    selectorhp <- selectorhp + damage
+
+endprocedure
+
+procedure winner(in p1, p2 : character)
+
+{
+    I.S Data pemain 1 (p1) dan pemain 2 (p2) terdefinisi
+    F.S Tercetak di layar hasil pertarungan berupa nama pemain, nyawa saat itu,
+        banyak serangan, dan jumlah serangan.
+}
+
+kamus
+
+    {tidak ada}
+
+algoritma
+
+    if p2.hp < 0 then
+        p2.hp <- 0
+    endif
+
+    if p1.hp < 0 then
+        p1.hp <- 0
+    endif
+
+    if p2.hp == 0 then
+        output("Link menang! putri Zelda berhasil diselamatkan.")
+    else
+        output("Ganon menang! putri Zelda dalam bahaya.")
+    endif
+
+    output(p1.name, ": health ", p1.hp, ", attacks ", p1.nAttacks, ", damage dealt ", p1.totalAttacks)
+	output(p2.name, ": health ", p2.hp, ", attacks ", p2.nAttacks, ", damage dealt ", p2.totalAttacks)
+
+endprocedure
+
+procedure gaming(in linkHP, ganonHP : integer)
+
+{
+    I.S nyawa Link (linkHP) dan Ganon (ganonHP) terdefinisi.
+    F.S algoritma permainan selesai berjalan dengan data yang dihasilkan dimasukkan
+        ke prosedur winner untuk menentukan pemenang & mencetak kesimpulan pertarungan.
+}
+
+kamus
+
+    lin, gan : character
+    player, action : string
+    selector, victim : pointer to character
+    i : integer
+
+algoritma
+
+    lin.name <- "Link"
+    gan.name <- "Ganon"
+
+    lin.hp <- linkHP
+    gan.hp <- ganonHP
+
+    lin.nAttacks <- 0
+    gan.nAttacks <- 0
+
+    lin.totalAttacks <- 0
+    gan.totalAttacks <- 0
+    
+    i <- 1
+
+    while lin.hp > 0 and gan.hp > 0 do
+
+        input(player, action)
+
+        depend on (player)
+
+            "Link":
+                selector <- address of lin
+                victim <- address of gan
+
+            "Ganon":
+                selector <- address of gan
+                victim <- address of lin
+
+        enddependon
+
+        depend on (action)
+
+            "ATTACK":
+                input(selector.attacks[i])
+                attack(selector.attacks[i], selector.totalAttacks, victim.hp, selector.nAttacks)
+
+            "DEFENSE":
+                if i > 1 then
+                    defense(victim.attacks[i-1], selector.hp)
+                endif
+
+            "PARRY":
+                if i > 1 then
+                    parry(victim.attacks[i-1], selector.hp, victim.hp)
+                endif
+
+        enddependon
+
+        i <- i + 1
+
+    endwhile
+
+    winner(lin, gan)
+
+endprocedure

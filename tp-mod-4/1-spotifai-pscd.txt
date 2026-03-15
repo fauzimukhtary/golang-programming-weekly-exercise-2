@@ -1,0 +1,102 @@
+program Spotifai
+kamus (global)
+
+    constant NMAX : integer = 999
+
+    type song <
+        judul, penyanyi : string
+        durasiMenit, durasiDetik : integer
+        >
+
+    type tabLagu <
+        totalDurasi : integer
+        arrLagu : array [1..NMAX] of song
+        >
+
+kamus (lokal)
+
+    n : integer
+    arrayLagu : tabLagu
+
+algoritma
+
+    input(n)
+    inputLagu(arrayLagu, n)
+    printLagu(arrayLagu, n)
+
+endprogram
+
+procedure inputLagu(in/out s : tabLagu, in n : integer)
+
+{
+    I.S. Data lagu (s) terdefinisi sembarang, n terdefinisi.
+    F.S. Data lagu (s) sebanyak n telah tersimpan.
+}
+
+kamus
+
+    i : integer
+
+algoritma
+
+    s.totalDurasi <- 0
+
+    for i <- 1 to n do
+    
+        output("Judul Lagu: ")
+        input(s.arrLagu[i].judul)
+
+        output("Nama Penyanyi: ")
+		input(s.arrLagu[i].penyanyi)
+
+		output("Durasi Lagu (menit detik): ")
+		input(s.arrLagu[i].durasiMenit, s.arrLagu[i].durasiDetik)
+
+        s.totalDurasi <- s.totalDurasi + (s.arrLagu[i].durasiMenit * 60 + s.arrLagu[i].durasiDetik)
+
+    endfor
+
+endprocedure
+
+procedure printLagu(in s : tabLagu, in n : integer)
+
+{
+    I.S. Data lagu (s) dan banyak lagu (n) terdefinisi.
+    F.S. Menampilkan data list lagu dalam format tabel.
+}
+
+kamus
+
+    i : integer
+
+algoritma
+
+    output("+---------------+---------------+----------+")
+    output("| Judul Lagu    | Penyanyi      | Durasi   |")
+    output("+---------------+---------------+----------+")
+
+    for i <- 1 to n do
+
+        output("| ", s.arrLagu[i].judul, "    ")
+        if length(s.arrLagu[i].judul) < 6 then
+            output("    ")
+        endif
+
+        output("| ", s.arrLagu[i].penyanyi, "    ")
+        if length(s.arrLagu[i].penyanyi) < 6 then
+            output("    ")
+        endif
+
+        output("| ", s.arrLagu[i].durasiMenit)
+        output(":", s.arrLagu[i].durasiDetik, "    |")
+
+    endfor
+
+    output("+---------------+---------------+----------+")
+    output("| Total Durasi Lagu        ")
+    output("| ", s.totalDurasi div 3600)
+	output(":", s.totalDurasi mod 3600 div 60)
+	output(":", s.totalDurasi mod 60, " |")
+	output("+---------------+---------------+----------+")
+
+endprocedure

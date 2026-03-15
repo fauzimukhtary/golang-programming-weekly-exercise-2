@@ -1,0 +1,89 @@
+program Menu
+kamus (global)
+
+    constant NMAX : integer = 999
+
+    type menu <
+        name : string
+        price, stock : integer
+        available : string
+        >
+        
+    type arrMenu : array [1..NMAX] of menu
+
+kamus (lokal)
+
+    n : integer
+    array : arrMenu
+    
+algoritma
+
+    input(n)
+    inputDataMenu(array, n)
+    printDataMenu(array, n)
+
+endprogram
+
+procedure inputDataMenu(in/out arr : arrMenu, n : integer)
+
+{
+    I.S. Data menu (arr) terdefinisi sembarang, n terdefinisi.
+    F.S. Data menu sebanyak n telah tersimpan dan status stok telah diupdate.
+}
+
+kamus
+
+    i : integer
+
+algoritma
+
+    for i <- 1 to n do
+
+		output("Nama Menu: ")
+		input(arr[i].name)
+
+		output("Harga Menu: ")
+		input(arr[i].price)
+
+		output("Stock: ")
+		input(arr[i].stock)
+
+		if arr[i].stock == 0 then
+			arr[i].available <- "Kosong"
+		else
+			arr[i].available <- "Tersedia"
+		endif
+
+    endfor
+
+endprocedure
+
+procedure printDataMenu(in arr : arrMenu, in n : integer)
+
+{
+    I.S. Data menu (arr) dan banyak menu (n) terdefinisi.
+    F.S. Menampilkan data list menu dalam format tabel.
+}
+
+kamus
+
+    i : integer
+
+algoritma
+
+    output("Nama Menu    Harga (Rp)    Stok (pcs)    Status Kesediaan")
+
+    for i <- 1 to n do
+
+        output(arr[i].name, "    ")
+        if length(arr[i].name) < 8 then
+            output("    ")
+        endif
+
+		output("Rp", arr[i].price, "        ")
+		output(arr[i].stock, "        ")
+		output(arr[i].available)
+
+    endfor
+
+endprocedure
