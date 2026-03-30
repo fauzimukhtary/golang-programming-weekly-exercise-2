@@ -1,0 +1,53 @@
+program Telcom
+kamus
+    nomorHP : string
+algoritma
+    input(nomorHP)
+    if validasiNomor(nomorHP) then
+        output("VALID")
+    else
+        output("INVALID")
+    endif
+endprogram
+
+function hitungDigitRek(nomor : string, posisi : integer) -> integer
+kamus
+    { tidak ada }
+algoritma
+    if nomor[posisi:] == "" then
+        return 1
+    else
+        return hitungDigitRek(nomor, posisi+1) + 1
+    endif
+endfunction
+
+function awalanValid(nomor : string) -> boolean
+kamus
+    { tidak ada }
+algoritma
+    if nomor[0] == '0' and nomor[1] == '8' then
+        return true
+    else if nomor[0] == '+' and nomor[1] == '6' and nomor[2] == '2' then
+        return true
+    else
+        return false
+    endif
+endfunction
+
+function validasiNomor(nomor : string) -> boolean
+kamus
+    jumlahDigitSesuai : boolean
+    awalan : boolean
+algoritma
+    awalan <- awalanValid(nomor)
+    if nomor[0] == '+' then
+        nomor <- nomor[1:]
+    endif
+    jumlahDigitSesuai <- hitungDigitRek(nomor, 3) >= 9 and hitungDigitRek(nomor, 3) <= 12
+
+    if jumlahDigitSesuai and awalan then
+        return true
+    else
+        return false
+    endif
+endfunction

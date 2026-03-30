@@ -1,0 +1,38 @@
+program Restoran
+kamus
+    total : integer
+algoritma
+    total <- transaksi(1, 0)
+    output("Total Poin: ", total)
+endprogram
+
+function hitungPoin(n : integer) -> integer
+kamus
+    { tidak ada }
+algoritma
+    if n < 50000 then
+        return 0
+    else if n < 100000 then
+        return 5
+    else if n < 200000 then
+        return 10
+    else
+        return 20
+    endif
+endfunction
+
+function transaksi(no : integer, totalPoin : integer) -> integer
+kamus
+    belanja : integer
+    poin : integer
+algoritma
+    input(belanja)
+
+    if belanja == 0 then
+        return totalPoin
+    else
+        poin <- hitungPoin(belanja)
+        output("Transaksi ", no, ": Belanja Rp ", belanja, ", Poin: ", poin)
+        return transaksi(no + 1, totalPoin + poin)
+    endif
+endfunction
