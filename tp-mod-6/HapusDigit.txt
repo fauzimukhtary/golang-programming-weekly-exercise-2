@@ -1,0 +1,43 @@
+program HapusDigit
+kamus
+    n, nDigit, target : integer
+algoritma
+    input(n)
+    nDigit <- jumlahDigit(n)
+    if nDigit <= 2 then
+        output("INPUT ERROR")
+    else if nDigit mod 2 == 0 then 
+        target <- nDigit div 2
+        output(hapusGenap(n, target))
+    else
+        target <- nDigit div 2 + 1
+        output(hapusGanjil(n, target))
+    endif
+endprogram
+
+function jumlahDigit(n : integer) -> integer
+algoritma
+    if n < 10 then
+        return 1
+    else
+        return jumlahDigit(n div 10) + 1
+    endif
+endprogram
+
+function hapusGanjil(n, del : integer) -> integer
+algoritma
+    if del == 1 then
+        return n div 10
+    else
+        return hapusGanjil(n div 10, del - 1) * 10 + n mod 10
+    endif
+endprogram
+
+function hapusGenap(n, del : integer) -> integer
+algoritma
+    if del == 1 then
+        return n div 100
+    else
+        return hapusGenap(n div 10, del - 1) * 10 + n mod 10
+    endif
+endprogram

@@ -1,0 +1,30 @@
+program Peak
+kamus
+    number : integer
+algoritma
+    input(number)
+    if isPeak(number) then
+        output("TRUE")
+    else
+        output("FALSE")
+    endif
+endprogram
+
+function isPeak(n : integer) -> boolean
+kamus
+    a1, a2, a3 : integer
+algoritma
+    if n < 100 then
+        return false
+    endif
+
+    a1 <- n div 100 mod 10
+    a2 <- n div 10 mod 10
+    a3 <- n mod 10
+
+    if a2 > a1 and a2 > a3 then
+        return true
+    else
+        return isPeak(n div 10)
+    endif
+endfunction

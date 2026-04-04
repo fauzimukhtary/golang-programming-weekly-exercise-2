@@ -1,0 +1,29 @@
+program PenghitungHariKerja
+kamus
+    start, nHari : integer
+algoritma
+    input(start, nHari)
+    output(hariKerja(start, nHari))
+endprogram
+
+function hariKerja(hariMulai, jumlahHari : integer) -> integer
+kamus
+    temp : integer
+algoritma
+    if jumlahHari == 1 then
+        temp <- 1
+        if hariMulai == 6 or hariMulai == 7 then
+            temp <- 0
+        endif
+        return temp
+    else
+        temp <- 1
+        if hariMulai == 6 then
+            temp <- 0
+        else if hariMulai == 7 then
+            temp <- 0
+            hariMulai <- 0
+        endif
+        return hariKerja(hariMulai + 1, jumlahHari - 1) + temp
+    endif
+endfunction
