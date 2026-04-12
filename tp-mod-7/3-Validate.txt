@@ -1,0 +1,42 @@
+program Validate
+kamus
+	konstan : integer
+algoritma
+	input(konstan)
+	validateNumber(konstan)
+endprogram
+
+procedure validateNumber(in x : integer)
+{I.S. terdefinisi bilangan bulat x
+F.S. tercetak di layar apakah x memenuhi syarat yg berlaku atau tidak}
+kamus
+	tiga, lima, dua : boolean
+	melanggar : boolean
+algoritma
+	while x != 0 do
+		if x mod 10 == 3 then
+			tiga <- true
+		endif
+
+		if x mod 10 == 5 then
+			lima <- true
+		endif
+
+		if x mod 10 == 2 then
+			dua <- true
+		endif
+
+		if (tiga and x mod 10 == 7) or (lima and x mod 10 == 0) or (dua and x mod 10 == 6) then
+			melanggar <- true
+		endif
+
+		x <- x div 10
+
+	endwhile
+
+	if melanggar then
+		output("BILANGAN TIDAK VALID")
+	else
+		output("BILANGAN VALID")
+	endif
+endprocedure

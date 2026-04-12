@@ -1,0 +1,25 @@
+program Sinyal
+kamus
+	konstanta : integer
+	res : integer
+algoritma
+	input(konstanta)
+	res <- smallestRepunitDivByK(konstanta)
+	output(res)
+endprogram
+
+function findRepunit(k, length, rem : integer) -> integer
+algoritma
+	if k mod 2 == 0 or k mod 5 == 0 then
+		return -1
+	else if rem mod k == 0 then
+		return length
+	else
+		return findRepunit(k, length + 1, (rem*10 + 1) mod k)
+	endif
+endfunction
+
+function smallestRepunitDivByK(k : integer) -> integer
+algoritma
+	return findRepunit(k, 1, 1)
+endfunction

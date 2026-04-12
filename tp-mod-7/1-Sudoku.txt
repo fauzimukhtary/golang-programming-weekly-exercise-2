@@ -1,0 +1,45 @@
+program Sudoku
+kamus
+	angka, nDigit : integer
+algoritma
+	input(angka)
+	nDigit <- countDigit(angka)
+	if nDigit < 9 or nDigit > 9 then
+		output(false)
+	else
+		output(validSolution(angka))
+	endif
+endprogram
+
+function validSolution(n : integer) -> boolean
+algoritma
+	if n == 0 then
+		return true
+	else if (hitungKemunculan(n, n mod 10) > 1) or (n mod 10 == 0 and n > 9) then
+		return false
+	else
+		return validSolution(n div 10)
+	endif
+endfunction
+
+function hitungKemunculan(n, d : integer) -> integer
+algoritma
+	if n == 0 then
+		return 0
+	else 
+		if n mod 10 == d then
+			return hitungKemunculan(n div 10, d) + 1
+		else
+			return hitungKemunculan(n div 10, d)
+		endif
+	endif
+endfunction
+
+function countDigit(n : integer) -> integer
+algoritma
+	if n == 0 then
+		return 0
+	else
+		return countDigit(n div 10) + 1
+	endif
+endfunction
