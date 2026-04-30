@@ -1,0 +1,47 @@
+program StructArray
+kamus (global)
+
+	type item <
+		nama : string
+		harga : integer
+	>
+
+	type arrItem : array [1..20] of item
+
+kamus (lokal)
+
+	benda : arrItem
+	i, n : integer
+	min, max : item
+
+algoritma
+
+	input(n)
+
+	for i <- 1 to n do
+		output("Nama Item: ")
+		input(benda[i].nama)
+		output("Harga Item: ")
+		input(benda[i].harga)
+	endfor
+
+	min <- benda[0]
+	max <- benda[0]
+
+	output("Nama Item		Harga")
+	for i <- 1 to n do
+		output(benda[i].nama, benda[i].harga)
+		
+		if benda[i].harga > max.harga then
+			max <- benda[i]
+		endif
+
+		if benda[i].harga < min.harga then
+			min <- benda[i]
+		endif
+	endfor
+
+	output("Item termahal", max.nama)
+	output("Item termurah", min.nama)
+
+endprogram
