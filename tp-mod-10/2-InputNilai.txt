@@ -1,0 +1,101 @@
+program InputNilai
+kamus (global)
+
+    constant NMAX : integer = 50
+
+    type Student <
+        nim, name : string
+        grade : real
+    >
+
+    type tabStudents : array [1..NMAX] of Student
+
+kamus (lokal)
+
+    data : tabStudents
+
+algoritma
+
+    inputDataStudent(data)
+    rapikanData(data)
+    cetakDataBersih(data)
+
+endprogram
+
+
+
+procedure inputDataStudent(in/out t : tabStudents)
+{
+    IS: terdefinisi sembarang t
+    FS: t berisi data mahasiswa
+}
+kamus
+
+    i : integer
+
+algoritma
+
+    i <- 0
+    input(t[i].nim)
+    while t[i].nim != "STOP" do
+        input(t[i].name, t[i].grade)
+        i <- i + 1
+        input(t[i].nim)
+    endwhile
+
+endprocedure
+
+
+
+procedure rapikanData(in/out t : tabStudents)
+{
+    IS: terdefinisi t (data mahasiswa)
+    FS: semua NIM yang muncul lebih satu kali
+    diganti dengan string "DUPLIKAT"
+}
+kamus
+
+    i, j : integer
+    target : string
+
+algoritma
+
+    i <- 0
+    while t[i].nim != "STOP" do
+        if t[i].nim != "DUPLIKAT" then
+            target <- t[i].nim
+            j <- i + 1
+            while t[j].nim != "STOP" do
+                if t[j].nim == target then
+                    t[j].nim <- "DUPLIKAT"
+                endif
+                j <- j + 1
+            endwhile
+        endif
+        i <- i + 1
+    endwhile
+
+endprocedure
+
+procedure cetakDataBersih(in t : tabStudents)
+{
+    IS: terdefinisi t (data mahasiswa)
+    FS: tercetak semua mahasiswa dgn NIM bkn string "DUPLIKAT"
+}
+kamus
+
+    i : integer
+
+algoritma
+
+    i <- 0
+
+    output("---RESULT---")
+    while t[i].nim != "STOP" do
+        if t[i].nim != "DUPLIKAT" then
+            output(t[i].nim, t[i].name, t[i].grade)
+        endif
+        i <- i + 1
+    endwhile
+
+endprocedure

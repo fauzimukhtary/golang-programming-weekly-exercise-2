@@ -1,0 +1,76 @@
+program Raport
+kamus (global)
+
+    constant NMAX : integer = 50
+
+    type Raport <
+        matkul : string
+        nilai : integer
+    >
+
+    type tabRaport : array [1..NMAX] of Raport
+
+kamus (lokal)
+
+    N, target : integer
+    dataRaport : tabRaport
+
+algoritma
+
+    input(N)
+    inputDataRaport(dataRaport, N)
+    input(target)
+    sekuensial(dataRaport, N, target)
+
+endprogram
+
+
+
+procedure inputDataRaport(in/out t : tabRaport, in n : integer)
+{
+    IS: terdefinisi n & terdefinisi sembarang t
+    FS: t berisi data matkul & nilai sebanyak n
+}
+kamus
+
+    i : integer
+
+algoritma
+
+    for i <- 1 to n do
+        input(t[i].matkul, t[i].nilai)
+    endfor
+
+endprocedure
+
+
+
+procedure sekuensial(in t : tabRaport, n, X : integer)
+{
+    IS: terdefinisi t (data matkul), n (jmlh matkul), & X (nilai yg dicari)
+    FS: tercetak semua matkul dgn nilai sm dgn X
+}
+kamus
+
+    i : integer
+    found : boolean
+
+algoritma
+
+    found <- false
+    output("---RESULT---")
+    
+    for i <- 1 to n do
+        if t[i].nilai == X then
+            output(t[i].matkul, t[i].nilai)
+            found <- true
+        endif
+    endfor
+
+    if found then
+        output("Data Ditemukan!")
+    else
+        output("Data tidak ditemukan!)
+    endif
+
+endprocedure
