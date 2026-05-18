@@ -1,0 +1,65 @@
+program Pelamar
+kamus (global)
+    constant NMAX : integer = 100
+    type Applicant <
+        id, name : string
+        testGrade : real
+        testDuration : integer
+    >
+    type applicants : array [1..NMAX] of Applicant
+kamus (lokal)
+    A : applicants
+    i, j, n, max : int
+    temp : Applicant
+    avgDur, avgTest : real
+algoritma
+    i <- 0
+    n <- 0
+
+    input(A[i].id)
+
+    while A[i].id != "END" do
+        input(A[i].name, A[i].testGrade, A[i].testDuration)
+        avgDur <- avgDur + A[i].testDuration
+        avgTest <- avgTest + A[i].testGrade
+        i <- i + 1
+        n <- n + 1
+        input(A[i].id)
+    endwhile
+
+    output("Data awal:")
+    for i <- 1 to n do
+        output(A[i].id, A[i].name, A[i].testGrade, A[i].testDuration)
+    endfor
+
+    for i <- 1 to n do
+        
+        max <- i
+
+        for j <- i+1 to n do
+
+            if A[j].testGrade > A[max].testGrade then
+                max <- j
+            else if A[j].testGrade == A[max].testGrade then
+                if A[j].testDuration < A[max].testDuration then
+                    max <- j
+                endif
+            endif
+
+        endfor
+
+        temp <- A[i]
+        A[i] <- A[max]
+        A[max] <- temp
+
+    endfor
+
+    output("Data setelah sortir:")
+    for i <- 1 to n do
+        output(A[i].id, A[i].name, A[i].testGrade, A[i].testDuration)
+    endfor
+    
+    output("Rata-rata durasi tes: ", avgDur / n, " menit")
+    output("Rata-rata nilai tes: ", avgTest / n)
+endprogram
+

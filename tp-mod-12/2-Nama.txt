@@ -1,0 +1,90 @@
+program Nama
+kamus (global)
+    constant MAX : integer = 99
+    type arrString : array [1..MAX] of string
+kamus (local)
+    N : integer
+    arr : arrString
+algoritma
+    input(N)
+    bacaData(arr, N)
+    selectionSortAscend(arr, N)
+    selectionSortDescend(arr, N)
+endprogram
+
+procedure bacaData(in/out A : arrString, in n : integer)
+{ IS terdefinisi array A dan bilangan n.
+  FS array A berisi n nama }
+kamus
+    i : integer
+algoritma
+    for i <- 1 to n do
+        input(A[i])
+    endfor
+endprocedure
+
+procedure cetakData(in A : arrString, in n : integer)
+{ IS terdefinisi array A berisi n nama.
+  FS tercetak n nama }
+kamus
+    i : integer
+algoritma
+    for i <- 1 to n do
+        output(A[i])
+        if i != n then
+            output(", ")
+        else
+            output(".")
+        endif
+    endfor
+endprocedure
+
+procedure selectionSortAscend(in/out A : arrString, in n : integer)
+{ IS terdefinisi array A berisi n nama.
+  FS A terurut menaik A–Z }
+kamus
+    i, j, min : integer
+    temp : string
+algoritma
+
+    for i <- 1 to n do
+        min <- i
+        for j <- i+1 to n do
+            if A[j] < A[min] then
+                min <- j
+            endif
+        endfor
+        temp <- A[i]
+        A[i] <- A[min]
+        A[min] <- temp
+    endfor
+
+    output("Data setelah diurutkan secara Ascending:")
+    cetakData(A, n)
+
+endprocedure
+
+procedure selectionSortDescend(in/out A : arrString, in n : integer)
+{ IS terdefinisi array A berisi n nama.
+  FS A terurut menurun Z-A }
+kamus
+    i, j, max : integer
+    temp : string
+algoritma
+
+    for i <- 1 to n do
+        max <- i
+        for j <- i+1 to n do
+            if A[j] > A[max] then
+                max <- j
+            endif
+        endfor
+        temp <- A[i]
+        A[i] <- A[max]
+        A[max] <- temp
+    endfor
+
+    output("Data setelah diurutkan secara Descending:")
+    cetakData(A, n)
+
+endprocedure

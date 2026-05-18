@@ -1,0 +1,66 @@
+program Penduduk
+kamus (global)
+    constant NMAX : integer = 99
+    type Penduduk <
+        nama : string
+        thnLahir : integer
+        tpLahir : string
+    >
+    type tabPenduduk : array [1..NMAX] of Penduduk
+kamus (lokal)
+    N, res : integer
+    daftarPenduduk : tabPenduduk
+    target : integer
+algoritma
+    input(N)
+    inputPenduduk(daftarPenduduk, N)
+    input(target)
+    res <- cariPenduduk(daftarPenduduk, N, target)
+    if res == -1 then
+        output("Data Tidak Ditemukan")
+    else
+        output(daftarPenduduk[res].nama)
+		output(daftarPenduduk[res].thnLahir)
+		output(daftarPenduduk[res].tpLahir)
+		output("ditemukan di index ke", res)
+    endif
+endprogram
+
+
+
+procedure inputPenduduk(in/out A : tabPenduduk, in n : integer)
+{
+    IS. terdefinisi sembarang A dan terdefinisi n
+    FS. A terisi data sebanyak n
+}
+kamus
+    i : integer
+algoritma
+    for i <- 1 to n do 
+        input(A[i].nama, A[i].thnLahir, A[i].tpLahir)
+    endfor
+endprocedure
+
+
+
+function cariPenduduk(A : tabPenduduk, n, x : integer) -> integer
+    { mengembalikan indeks nilai yg dicari, -1 jika tdk ada }
+kamus
+    left, right, mid : integer
+    found : integer
+algoritma
+    left <- 1
+    right <- n
+    found <- -1
+    while left <= right and found == -1 do
+        mid <- (left + right) div 2
+        if A[mid].thnLahir == x then
+            found <- mid
+        else if x < A[mid].thnLahir then
+            right <- mid - 1
+        else if x > A[mid].thnLahir then
+            left <- mid + 1
+        endif
+    endwhile
+    return found
+endfunction
